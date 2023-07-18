@@ -20,13 +20,17 @@ rows = [ [2,1],[1,3],[1,2],[3],[4],[1] ]
 collumns = [ [1],[5],[2],[5],[2,1],[2] ]
 
 
---makeFill :: Block -> [[State]]
-makeFill = intersperse [cross] . map (`replicate` fill)
+
+crossPares []    = []
+crossPares [a]   = [a]
+crossPares (h:t) = (h ++ [cross]) : crossPares t
+
+makeFill = crossPares . map (`replicate` fill)
 
 --inserir espaços a toa para gerar todas as cenas
 
+
+
 -- all possibilities
 --ap :: Line -> Int -> [Line]
-ap line n = squares
-    where 
-        squares = makeFill line
+ap line n = makeFill line
