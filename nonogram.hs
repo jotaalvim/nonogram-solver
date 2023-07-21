@@ -8,7 +8,7 @@ type State = Bool
 type Block = [Int]
 type Line  = [Block]
 
--- TIPO EMPTY?
+-- TIPO EMPTY? mudar o state
 
 fill,cross :: State
 fill  = True
@@ -19,6 +19,21 @@ rows,collumns :: Line
 rows = [ [2,1],[1,3],[1,2],[3],[4],[1] ]
 collumns = [ [1],[5],[2],[5],[2,1],[2] ]
 
+delAll x l = [a | a <- l, a /= x]
+
+extra  = flip take $ repeat [cross]
+
+-- filtro para manter a mesma ordem relativa
+-- usado apra gerar as permutações
+
+--orel i = ( == i ) . delAll [cross]
+orel = (. delAll [cross]) . (==)
+
+
+perm n l = filter (orel l) $ permutations (pack n l) 
+
+pack n l = l ++ replicate x [cross]
+    where x = n - (length $ concat l)
 
 
 crossPares []    = []
@@ -28,8 +43,6 @@ crossPares (h:t) = (h ++ [cross]) : crossPares t
 makeFill = crossPares . map (`replicate` fill)
 
 --inserir espaços a toa para gerar todas as cenas
-
-
 
 -- all possibilities
 --ap :: Line -> Int -> [Line]
