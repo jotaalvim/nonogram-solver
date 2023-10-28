@@ -50,3 +50,6 @@ commons = map eqcomm . zip [0..] . transpose . map concat
 --        simple = zip [0..] $ transpose $ concat ll
 
 gera n l = commons $ perm n $ makeFill l
+
+--   linha possível, linha existente = 
+--merge l1 l2 = 
